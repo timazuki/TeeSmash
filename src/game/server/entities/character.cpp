@@ -64,6 +64,8 @@ bool CCharacter::Spawn(CPlayer *pPlayer, vec2 Pos)
 	m_pPlayer = pPlayer;
 	m_Pos = Pos;
 
+	m_KnockbackStrength = 0;
+
 	m_Core.Reset();
 	m_Core.Init(&GameServer()->m_World.m_Core, GameServer()->Collision());
 	m_Core.m_Pos = m_Pos;
@@ -313,8 +315,11 @@ void CCharacter::FireWeapon()
 				else
 					Dir = vec2(0.f, -1.f);
 
-				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(Dir + vec2(0.f, -1.1f)) * 40.0f, 0,
+				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * (10 + pTarget->m_KnockbackStrength * 3), 0,
 					m_pPlayer->GetCID(), m_ActiveWeapon);
+
+				pTarget->m_KnockbackStrength += 1;
+
 				Hits++;
 			}
 
