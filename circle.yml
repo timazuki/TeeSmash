@@ -13,4 +13,4 @@ dependencies:
 test:
   override:
     - |
-        ../bam/bam release
+        ../bam/bam server_release
