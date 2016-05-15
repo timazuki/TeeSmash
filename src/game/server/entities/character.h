@@ -25,7 +25,11 @@ public:
 	static const int ms_PhysSize = 28;
 
 	CCharacter(CGameWorld *pWorld);
+
 	int m_KnockbackStrength;
+	int m_HammeredBy;
+	int64 m_HammerTime;
+
 	virtual void Reset();
 	virtual void Destroy();
 	virtual void Tick();

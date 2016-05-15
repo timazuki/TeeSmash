@@ -137,7 +137,7 @@ bool IGameController::OnEntity(int Index, vec2 Pos)
 		m_aaSpawnPoints[1][m_aNumSpawnPoints[1]++] = Pos;
 	else if(Index == ENTITY_SPAWN_BLUE)
 		m_aaSpawnPoints[2][m_aNumSpawnPoints[2]++] = Pos;
-	else if(Index == ENTITY_ARMOR_1)
+	/*else if(Index == ENTITY_ARMOR_1)
 		Type = POWERUP_ARMOR;
 	else if(Index == ENTITY_HEALTH_1)
 		Type = POWERUP_HEALTH;
@@ -160,7 +160,7 @@ bool IGameController::OnEntity(int Index, vec2 Pos)
 	{
 		Type = POWERUP_NINJA;
 		SubType = WEAPON_NINJA;
-	}
+	}*/
 
 	if(Type != -1)
 	{
