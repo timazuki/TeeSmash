@@ -129,7 +129,7 @@ void CPlayer::Snap(int SnappingClient)
 	pClientInfo->m_UseCustomColor = true;
 
 	int KnockbackStrength = m_pCharacter ? m_pCharacter->m_KnockbackStrength : 0;
-	int SkinHue = max(0, (32 - KnockbackStrength) * 6) << 16;
+	int SkinHue = min((10 + KnockbackStrength) * 6, 255) << 16;
 	pClientInfo->m_ColorBody = SkinHue | 255 << 8;
 	pClientInfo->m_ColorFeet = SkinHue | 127 << 8;
 
