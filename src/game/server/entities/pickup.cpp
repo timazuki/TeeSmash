@@ -49,11 +49,17 @@ void CPickup::Tick()
 		switch (m_Type)
 		{
 			case POWERUP_HEALTH:
-				if(pChr->IncreaseHealth(1))
+				if(pChr->m_KnockbackStrength >= 1)
 				{
+					pChr->m_KnockbackStrength -= 1;
 					GameServer()->CreateSound(m_Pos, SOUND_PICKUP_HEALTH);
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
 				}
+				/*if(pChr->IncreaseHealth(1))
+				{
+					GameServer()->CreateSound(m_Pos, SOUND_PICKUP_HEALTH);
+					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
+				}*/
 				break;
 
 			case POWERUP_ARMOR:
