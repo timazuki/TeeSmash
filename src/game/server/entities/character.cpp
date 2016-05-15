@@ -316,7 +316,7 @@ void CCharacter::FireWeapon()
 				else
 					Dir = vec2(0.f, -1.f);
 
-				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * (30 + pTarget->m_KnockbackStrength * 5), 0,
+				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * (30 + pTarget->m_KnockbackStrength * 6), 0,
 					m_pPlayer->GetCID(), m_ActiveWeapon);
 				pTarget->m_HammerTime = time_get() + time_freq()*10;
 				pTarget->m_HammeredBy = m_pPlayer->GetCID();

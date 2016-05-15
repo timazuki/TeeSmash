@@ -127,8 +127,11 @@ void CPlayer::Snap(int SnappingClient)
 	pClientInfo->m_Country = Server()->ClientCountry(m_ClientID);
 	StrToInts(&pClientInfo->m_Skin0, 6, m_TeeInfos.m_SkinName);
 	pClientInfo->m_UseCustomColor = true;
-	pClientInfo->m_ColorBody = m_pCharacter ? (min((5 + m_pCharacter->m_KnockbackStrength) * 4, 255) << 16) | 0xff00 : 0;
-	pClientInfo->m_ColorFeet = m_TeeInfos.m_ColorFeet;
+
+	int KnockbackStrength = m_pCharacter ? m_pCharacter->m_KnockbackStrength : 0;
+	int SkinHue = max(0, (32 - KnockbackStrength) * 6) << 16;
+	pClientInfo->m_ColorBody = SkinHue | 255 << 8;
+	pClientInfo->m_ColorFeet = SkinHue | 127 << 8;
 
 	CNetObj_PlayerInfo *pPlayerInfo = static_cast<CNetObj_PlayerInfo *>(Server()->SnapNewItem(NETOBJTYPE_PLAYERINFO, m_ClientID, sizeof(CNetObj_PlayerInfo)));
 	if(!pPlayerInfo)
