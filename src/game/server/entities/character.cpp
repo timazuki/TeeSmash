@@ -320,7 +320,10 @@ void CCharacter::FireWeapon()
 					m_pPlayer->GetCID(), m_ActiveWeapon);
 				pTarget->m_HammerTime = time_get() + time_freq()*10;
 				pTarget->m_HammeredBy = m_pPlayer->GetCID();
-				pTarget->m_KnockbackStrength += 1;
+				if(pTarget->m_Armor == 0)
+					pTarget->m_KnockbackStrength += 1;
+				else
+					pTarget->m_Armor -= 1;
 
 				Hits++;
 			}
