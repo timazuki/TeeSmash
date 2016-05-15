@@ -1,5 +1,5 @@
 ##TeeSmash
-Created by Ryozuki with the help of Timakro.
+Created by Ryozuki with the help of timakro.
 
 ##How it Works
 ---
