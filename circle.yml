@@ -1,0 +1,16 @@
+dependencies:
+  pre:
+    - |
+        sudo apt-get install libsdl1.2-dev
+        if [ ! -x ~/bam/bam ]; then
+          git clone https://github.com/matricks/bam ~/bam/
+          cd ~/bam; ./make_unix.sh
+        fi
+  cache_directories:
+    - "~/bam/"
+
+## Customize test commands
+test:
+  override:
+    - |
+        ../bam/bam release
