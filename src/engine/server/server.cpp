@@ -1705,7 +1705,7 @@ int main(int argc, const char **argv) // ignore_convention
 	pServer->RegisterCommands();
 
 	// execute autoexec file
-	pConsole->ExecuteFile("teesmash.cfg");
+	pConsole->ExecuteFile("autoexec.cfg");
 
 	// parse the command line arguments
 	if(argc > 1) // ignore_convention
