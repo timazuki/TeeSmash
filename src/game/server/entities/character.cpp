@@ -65,6 +65,7 @@ bool CCharacter::Spawn(CPlayer *pPlayer, vec2 Pos)
 	m_Pos = Pos;
 
 	m_KnockbackStrength = 0;
+	m_HammeredBy = 0;
 
 	m_Core.Reset();
 	m_Core.Init(&GameServer()->m_World.m_Core, GameServer()->Collision());
@@ -317,7 +318,8 @@ void CCharacter::FireWeapon()
 
 				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * (10 + pTarget->m_KnockbackStrength * 3), 0,
 					m_pPlayer->GetCID(), m_ActiveWeapon);
-
+				pTarget->m_HammerTime = time_get() + time_freq()*10;
+				pTarget->m_HammeredBy = m_pPlayer->GetCID();
 				pTarget->m_KnockbackStrength += 1;
 
 				Hits++;
@@ -666,6 +668,11 @@ bool CCharacter::IncreaseArmor(int Amount)
 
 void CCharacter::Die(int Killer, int Weapon)
 {
+	if(time_get() < m_HammerTime){
+  	Killer = m_HammeredBy;
+		Weapon = WEAPON_HAMMER;
+	}
+
 	// we got to wait 0.5 secs before respawning
 	m_pPlayer->m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/2;
 	int ModeSpecial = GameServer()->m_pController->OnCharacterDeath(this, GameServer()->m_apPlayers[Killer], Weapon);
