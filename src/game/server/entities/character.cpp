@@ -65,6 +65,7 @@ bool CCharacter::Spawn(CPlayer *pPlayer, vec2 Pos)
 	m_Pos = Pos;
 
 	m_KnockbackStrength = 0;
+	m_SuperHammer = 0;
 	m_HammeredBy = 0;
 
 	m_Core.Reset();
@@ -130,7 +131,7 @@ void CCharacter::HandleNinja()
 	}
 
 	// force ninja Weapon
-	SetWeapon(WEAPON_NINJA);
+	/*SetWeapon(WEAPON_NINJA);*/
 
 	m_Ninja.m_CurrentMoveTime--;
 
@@ -316,8 +317,15 @@ void CCharacter::FireWeapon()
 				else
 					Dir = vec2(0.f, -1.f);
 
-				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * (30 + pTarget->m_KnockbackStrength * 6), 0,
+				if(m_SuperHammer > 0)
+				{
+					pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * (g_Config.m_SvStartHammerStrength + pTarget->m_KnockbackStrength * ((g_Config.m_SvHammerStrengthHit / 10.0) * g_Config.m_SvSuperHammerStrength)), 0, m_pPlayer->GetCID(), m_ActiveWeapon);
+					m_SuperHammer -= 1;
+				}
+				else
+					pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * ((g_Config.m_SvStartHammerStrength / 10.0) + pTarget->m_KnockbackStrength * (g_Config.m_SvHammerStrengthHit / 10.0)), 0,
 					m_pPlayer->GetCID(), m_ActiveWeapon);
+
 				pTarget->m_HammerTime = time_get() + time_freq()*10;
 				pTarget->m_HammeredBy = m_pPlayer->GetCID();
 				if(pTarget->m_Armor == 0)
@@ -336,12 +344,13 @@ void CCharacter::FireWeapon()
 
 		case WEAPON_GUN:
 		{
-			CProjectile *pProj = new CProjectile(GameWorld(), WEAPON_GUN,
+			//comment this because unused
+			/*CProjectile *pProj = new CProjectile(GameWorld(), WEAPON_GUN,
 				m_pPlayer->GetCID(),
 				ProjStartPos,
 				Direction,
 				(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GunLifetime),
-				1, 0, 0, -1, WEAPON_GUN);
+				1, 0, 0, -1, WEAPON_GUN);*/
 
 			GameServer()->CreateSound(m_Pos, SOUND_GUN_FIRE);
 		} break;
@@ -352,6 +361,8 @@ void CCharacter::FireWeapon()
 
 			for(int i = -ShotSpread; i <= ShotSpread; ++i)
 			{
+				//comment this because unused
+				/*
 				float Spreading[] = {-0.185f, -0.070f, 0, 0.070f, 0.185f};
 				float a = GetAngle(Direction);
 				a += Spreading[i+2];
@@ -363,6 +374,7 @@ void CCharacter::FireWeapon()
 					vec2(cosf(a), sinf(a))*Speed,
 					(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_ShotgunLifetime),
 					1, 0, 0, -1, WEAPON_SHOTGUN);
+				*/
 			}
 
 			GameServer()->CreateSound(m_Pos, SOUND_SHOTGUN_FIRE);
@@ -370,14 +382,15 @@ void CCharacter::FireWeapon()
 
 		case WEAPON_GRENADE:
 		{
-			CProjectile *pProj = new CProjectile(GameWorld(), WEAPON_GRENADE,
+			//comment this because unused
+			/*CProjectile *pProj = new CProjectile(GameWorld(), WEAPON_GRENADE,
 				m_pPlayer->GetCID(),
 				ProjStartPos,
 				Direction,
 				(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GrenadeLifetime),
 				1, true, 0, SOUND_GRENADE_EXPLODE, WEAPON_GRENADE);
 
-			GameServer()->CreateSound(m_Pos, SOUND_GRENADE_FIRE);
+			GameServer()->CreateSound(m_Pos, SOUND_GRENADE_FIRE);*/
 		} break;
 
 		case WEAPON_RIFLE:

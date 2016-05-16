@@ -83,6 +83,9 @@ MACRO_CONFIG_INT(SvVoteKick, sv_vote_kick, 1, 0, 1, CFGFLAG_SERVER, "Allow votin
 MACRO_CONFIG_INT(SvVoteKickMin, sv_vote_kick_min, 0, 0, MAX_CLIENTS, CFGFLAG_SERVER, "Minimum number of players required to start a kick vote")
 MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SERVER, "The time to ban a player if kicked by vote. 0 makes it just use kick")
 
+MACRO_CONFIG_INT(SvHammerStrengthHit, sv_hammer_strength_hit, 60, 1, 10000, CFGFLAG_SERVER, "How much the hammer strength increases which each hit")
+MACRO_CONFIG_INT(SvStartHammerStrength, sv_hammer_strength_start, 300, 1, 10000, CFGFLAG_SERVER, "The hammer strength before being hit")
+MACRO_CONFIG_INT(SvSuperHammerStrength, sv_super_hammer_strength, 2, 2, 1000, CFGFLAG_SERVER, "How much power the super hammer multiplies the knockback.")
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
 	MACRO_CONFIG_INT(DbgDummies, dbg_dummies, 0, 0, 15, CFGFLAG_SERVER, "")

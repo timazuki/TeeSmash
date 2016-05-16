@@ -92,8 +92,7 @@ void CPickup::Tick()
 
 			case POWERUP_NINJA:
 				{
-					// activate ninja on target player
-					pChr->GiveNinja();
+					pChr->m_SuperHammer += 1;
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
 
 					// loop through all players, setting their emotes
