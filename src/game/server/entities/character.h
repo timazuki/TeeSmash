@@ -26,8 +26,10 @@ public:
 
 	CCharacter(CGameWorld *pWorld);
 
+	int m_HammerScale;
 	int m_KnockbackStrength;
 	int m_HammeredBy;
+	int m_SuperHammer;
 	int64 m_HammerTime;
 
 	virtual void Reset();
