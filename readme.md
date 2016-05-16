@@ -2,7 +2,6 @@
 Created by Ryozuki with the help of timakro.
 
 ##How it Works
----
 The goal of this gamemode is to hammer others out of the map.
 When you hammer a tee, the knocback strength against that tee increases (the strength is indicated with the skin color).
 The hearts decrease your knockback.
