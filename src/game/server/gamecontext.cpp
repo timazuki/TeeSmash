@@ -538,7 +538,7 @@ void CGameContext::OnClientEnter(int ClientID)
 
 	str_format(aBuf, sizeof(aBuf), "team_join player='%d:%s' team=%d", ClientID, Server()->ClientName(ClientID), m_apPlayers[ClientID]->GetTeam());
 	Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
-	SendBroadcast("Hammer others into spikes/out of the map to win!", ClientID);
+	SendBroadcast("Hammer others into spikes or off the platform to win!", ClientID);
 	m_VoteUpdate = true;
 }
 
