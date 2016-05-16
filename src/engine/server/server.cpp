@@ -859,10 +859,10 @@ void CServer::ProcessClientPacket(CNetChunk *pPacket)
 			int Last = 0;
 
 			// drop faulty map data requests
-			if(Chunk < 0 || Offset > m_CurrentMapSize)
+			if(Chunk < 0 || Offset > (unsigned int)m_CurrentMapSize)
 				return;
 
-			if(Offset+ChunkSize >= m_CurrentMapSize)
+			if(Offset+ChunkSize >= (unsigned int)m_CurrentMapSize)
 			{
 				ChunkSize = m_CurrentMapSize-Offset;
 				if(ChunkSize < 0)

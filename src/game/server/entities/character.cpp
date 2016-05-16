@@ -326,7 +326,7 @@ void CCharacter::FireWeapon()
 
 		case WEAPON_GUN:
 		{
-			CProjectile *pProj = new CProjectile(GameWorld(), WEAPON_GUN,
+			new CProjectile(GameWorld(), WEAPON_GUN,
 				m_pPlayer->GetCID(),
 				ProjStartPos,
 				Direction,
@@ -347,7 +347,7 @@ void CCharacter::FireWeapon()
 				a += Spreading[i+2];
 				float v = 1-(absolute(i)/(float)ShotSpread);
 				float Speed = mix((float)GameServer()->Tuning()->m_ShotgunSpeeddiff, 1.0f, v);
-				CProjectile *pProj = new CProjectile(GameWorld(), WEAPON_SHOTGUN,
+				new CProjectile(GameWorld(), WEAPON_SHOTGUN,
 					m_pPlayer->GetCID(),
 					ProjStartPos,
 					vec2(cosf(a), sinf(a))*Speed,
@@ -360,7 +360,7 @@ void CCharacter::FireWeapon()
 
 		case WEAPON_GRENADE:
 		{
-			CProjectile *pProj = new CProjectile(GameWorld(), WEAPON_GRENADE,
+			new CProjectile(GameWorld(), WEAPON_GRENADE,
 				m_pPlayer->GetCID(),
 				ProjStartPos,
 				Direction,
