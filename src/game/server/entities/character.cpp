@@ -322,7 +322,6 @@ void CCharacter::FireWeapon()
 
 				vec2 Force = vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * FinalHammerStrength;
 				pTarget->TakeDamage(Force, 0, m_pPlayer->GetCID(), m_ActiveWeapon);
-				pTarget->m_HammerTime = time_get() + time_freq()*10;
 				pTarget->m_LastHammer.By(m_pPlayer->GetCID(), 10);
 				
 				if(pTarget->m_Armor == 0)
