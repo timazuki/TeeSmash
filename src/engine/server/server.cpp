@@ -38,21 +38,39 @@
 
 static const char *StrLtrim(const char *pStr)
 {
-	while(*pStr && *pStr >= 0 && *pStr <= 32)
-		pStr++;
+	while(*pStr)
+	{
+		const char *pStrOld = pStr;
+		int Code = str_utf8_decode(&pStr);
+
+		// check if unicode is not empty
+		if(str_utf8_isspace(Code))
+		{
+			return pStrOld;
+		}
+	}
 	return pStr;
 }
 
 static void StrRtrim(char *pStr)
 {
-	int i = str_length(pStr);
-	while(i >= 0)
+	const char *p = pStr;
+	const char *pEnd = 0;
+	while(*p)
 	{
-		if(pStr[i] < 0 || pStr[i] > 32)
-			break;
-		pStr[i] = 0;
-		i--;
+		const char *pStrOld = p;
+		int Code = str_utf8_decode(&p);
+
+		// check if unicode is not empty
+		if(str_utf8_isspace(Code))
+		{
+			pEnd = 0;
+		}
+		else if(pEnd == 0)
+			pEnd = pStrOld;
 	}
+	if(pEnd != 0)
+		*(const_cast<char *>(pEnd)) = 0;
 }
 
 
@@ -333,23 +351,14 @@ void CServer::SetClientName(int ClientID, const char *pName)
 	if(!pName)
 		return;
 
-	char aCleanName[MAX_NAME_LENGTH];
-	str_copy(aCleanName, pName, sizeof(aCleanName));
-
-	// clear name
-	for(char *p = aCleanName; *p; ++p)
-	{
-		if(*p < 32)
-			*p = ' ';
-	}
-
-	if(TrySetClientName(ClientID, aCleanName))
+	char aNameTry[MAX_NAME_LENGTH];
+	str_copy(aNameTry, pName, sizeof(aNameTry));
+	if(TrySetClientName(ClientID, aNameTry))
 	{
 		// auto rename
 		for(int i = 1;; i++)
 		{
-			char aNameTry[MAX_NAME_LENGTH];
-			str_format(aNameTry, sizeof(aCleanName), "(%d)%s", i, aCleanName);
+			str_format(aNameTry, sizeof(aNameTry), "(%d)%s", i, pName);
 			if(TrySetClientName(ClientID, aNameTry) == 0)
 				break;
 		}
