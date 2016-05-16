@@ -318,12 +318,15 @@ void CCharacter::FireWeapon()
 
 				float FinalHammerStrength = g_Config.m_SvHammerStrengthStart/10.f + pTarget->m_KnockbackStrength * g_Config.m_SvHammerStrengthHit/10.f;
 				if(m_SuperHammer > 0)
-					FinalHammerStrength *= g_Config.m_SvHammerStrengthSuper/10.f;
-
+				{
+					FinalHammerStrength += g_Config.m_SvHammerStrengthSuper/10.f;
+					m_SuperHammer -= 1;
+				}
 				vec2 Force = vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * FinalHammerStrength;
 				pTarget->TakeDamage(Force, 0, m_pPlayer->GetCID(), m_ActiveWeapon);
-				pTarget->m_LastHammer.By(m_pPlayer->GetCID(), 10);
-				
+
+				pTarget->m_LastHammer.By(m_pPlayer->GetCID(), g_Config.m_SvScoreTimeHammer);
+
 				if(pTarget->m_Armor == 0)
 					pTarget->m_KnockbackStrength += 1;
 				else
@@ -623,7 +626,7 @@ void CCharacter::TickDefered()
 		GameServer()->CreateSound(m_Pos, SOUND_HOOK_ATTACH_PLAYER, CmaskAll());
 		int HookedCID = m_Core.m_HookedPlayer;
 		if(GameServer()->m_apPlayers[HookedCID] && GameServer()->m_apPlayers[HookedCID]->GetCharacter())
-			GameServer()->m_apPlayers[HookedCID]->GetCharacter()->m_LastHook.By(m_pPlayer->GetCID(), 10);
+			GameServer()->m_apPlayers[HookedCID]->GetCharacter()->m_LastHook.By(m_pPlayer->GetCID(), g_Config.m_SvScoreTimeHook);
 	}
 	if(Events&COREEVENT_HOOK_ATTACH_GROUND) GameServer()->CreateSound(m_Pos, SOUND_HOOK_ATTACH_GROUND, Mask);
 	if(Events&COREEVENT_HOOK_HIT_NOHOOK) GameServer()->CreateSound(m_Pos, SOUND_HOOK_NOATTACH, Mask);
