@@ -66,7 +66,6 @@ bool CCharacter::Spawn(CPlayer *pPlayer, vec2 Pos)
 
 	m_KnockbackStrength = 0;
 	m_SuperHammer = 0;
-	m_HammeredBy = 0;
 
 	m_Core.Reset();
 	m_Core.Init(&GameServer()->m_World.m_Core, GameServer()->Collision());
@@ -324,7 +323,8 @@ void CCharacter::FireWeapon()
 				vec2 Force = vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * FinalHammerStrength;
 				pTarget->TakeDamage(Force, 0, m_pPlayer->GetCID(), m_ActiveWeapon);
 				pTarget->m_HammerTime = time_get() + time_freq()*10;
-				pTarget->m_HammeredBy = m_pPlayer->GetCID();
+				pTarget->m_LastHammer.By(m_pPlayer->GetCID(), 10);
+				
 				if(pTarget->m_Armor == 0)
 					pTarget->m_KnockbackStrength += 1;
 				else
@@ -619,7 +619,13 @@ void CCharacter::TickDefered()
 
 	if(Events&COREEVENT_GROUND_JUMP) GameServer()->CreateSound(m_Pos, SOUND_PLAYER_JUMP, Mask);
 
-	if(Events&COREEVENT_HOOK_ATTACH_PLAYER) GameServer()->CreateSound(m_Pos, SOUND_HOOK_ATTACH_PLAYER, CmaskAll());
+	if(Events&COREEVENT_HOOK_ATTACH_PLAYER)
+	{
+		GameServer()->CreateSound(m_Pos, SOUND_HOOK_ATTACH_PLAYER, CmaskAll());
+		int HookedCID = m_Core.m_HookedPlayer;
+		if(GameServer()->m_apPlayers[HookedCID] && GameServer()->m_apPlayers[HookedCID]->GetCharacter())
+			GameServer()->m_apPlayers[HookedCID]->GetCharacter()->m_LastHook.By(m_pPlayer->GetCID(), 10);
+	}
 	if(Events&COREEVENT_HOOK_ATTACH_GROUND) GameServer()->CreateSound(m_Pos, SOUND_HOOK_ATTACH_GROUND, Mask);
 	if(Events&COREEVENT_HOOK_HIT_NOHOOK) GameServer()->CreateSound(m_Pos, SOUND_HOOK_NOATTACH, Mask);
 
@@ -681,9 +687,15 @@ bool CCharacter::IncreaseArmor(int Amount)
 
 void CCharacter::Die(int Killer, int Weapon)
 {
-	if(time_get() < m_HammerTime){
-  	Killer = m_HammeredBy;
+	if(m_LastHammer.Who() != -1)
+	{
+		Killer = m_LastHammer.Who();
 		Weapon = WEAPON_HAMMER;
+	}
+	else if(m_LastHook.Who() != -1)
+	{
+		Killer = m_LastHook.Who();
+		// keep weapon game for hooks (not sure if there is a better weapon to represent hooking)
 	}
 
 	// we got to wait 0.5 secs before respawning
@@ -867,4 +879,23 @@ void CCharacter::Snap(int SnappingClient)
 	}
 
 	pCharacter->m_PlayerFlags = GetPlayer()->m_PlayerFlags;
+}
+
+CCharacter::LastTouch::LastTouch()
+{
+	m_TouchedBy = -1;
+	m_TouchedUntil = 0;
+}
+
+void CCharacter::LastTouch::By(int ClientID, int Duration)
+{
+	m_TouchedBy = ClientID;
+	m_TouchedUntil = time_get() + time_freq()*Duration;
+}
+
+int CCharacter::LastTouch::Who()
+{
+	if(time_get() < m_TouchedUntil)
+		return m_TouchedBy;
+	return -1;
 }
