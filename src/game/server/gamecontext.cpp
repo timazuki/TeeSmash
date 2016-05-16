@@ -912,14 +912,17 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 			SendEmoticon(ClientID, pMsg->m_Emoticon);
 		}
 		//prevent killing
-		/*else if (MsgID == NETMSGTYPE_CL_KILL && !m_World.m_Paused)
+		else if (MsgID == NETMSGTYPE_CL_KILL && !m_World.m_Paused)
 		{
 			if(pPlayer->m_LastKill && pPlayer->m_LastKill+Server()->TickSpeed()*3 > Server()->Tick())
 				return;
 
-			pPlayer->m_LastKill = Server()->Tick();
-			pPlayer->KillCharacter(WEAPON_SELF);
-		}*/
+			char aBuf[512];
+			str_format(aBuf, sizeof(aBuf), "You can't commit suicide!");
+			SendChatTarget(ClientID, aBuf);
+			/*pPlayer->m_LastKill = Server()->Tick();
+			pPlayer->KillCharacter(WEAPON_SELF);*/
+		}
 	}
 	else
 	{
