@@ -317,15 +317,12 @@ void CCharacter::FireWeapon()
 				else
 					Dir = vec2(0.f, -1.f);
 
+				int FinalHammerStrength = (g_Config.m_SvStartHammerStrength / 10.0) + pTarget->m_KnockbackStrength * ((g_Config.m_SvHammerStrengthHit / 10.0));
 				if(m_SuperHammer > 0)
-				{
-					pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * (g_Config.m_SvStartHammerStrength + pTarget->m_KnockbackStrength * ((g_Config.m_SvHammerStrengthHit / 10.0) * g_Config.m_SvSuperHammerStrength)), 0, m_pPlayer->GetCID(), m_ActiveWeapon);
-					m_SuperHammer -= 1;
-				}
-				else
-					pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * ((g_Config.m_SvStartHammerStrength / 10.0) + pTarget->m_KnockbackStrength * (g_Config.m_SvHammerStrengthHit / 10.0)), 0,
-					m_pPlayer->GetCID(), m_ActiveWeapon);
+					FinalHammerStrength *= g_Config.m_SvSuperHammerStrength;
 
+				vec2 Force = vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * FinalHammerStrength;
+				pTarget->TakeDamage(Force, 0, m_pPlayer->GetCID(), m_ActiveWeapon);
 				pTarget->m_HammerTime = time_get() + time_freq()*10;
 				pTarget->m_HammeredBy = m_pPlayer->GetCID();
 				if(pTarget->m_Armor == 0)
