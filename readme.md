@@ -3,7 +3,7 @@ Created by Ryozuki with the help of timakro.
 
 ##How it Works
 The goal of this gamemode is to hammer others on the spikes or out of the map.
-When you hammer a tee, the knocback strength against that tee increases (the strength is indicated with the skin color).
+When you hammer a tee, the knockback strength against that tee increases (the strength is indicated with the skin color).
 
 The hearts decrease your knockback and the shields protect you against adding knockback from 1 hit.
 
