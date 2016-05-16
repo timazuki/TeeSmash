@@ -27,9 +27,19 @@ public:
 	CCharacter(CGameWorld *pWorld);
 
 	int m_KnockbackStrength;
-	int m_HammeredBy;
 	int m_SuperHammer;
-	int64 m_HammerTime;
+
+	class LastTouch
+	{
+		int m_TouchedBy;
+		int64 m_TouchedUntil;
+	public:
+		LastTouch();
+		void By(int ClientID, int Duration);
+		int Who();
+	};
+	LastTouch m_LastHammer;
+	LastTouch m_LastHook;
 
 	virtual void Reset();
 	virtual void Destroy();
