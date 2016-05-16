@@ -316,9 +316,9 @@ void CCharacter::FireWeapon()
 				else
 					Dir = vec2(0.f, -1.f);
 
-				int FinalHammerStrength = (g_Config.m_SvStartHammerStrength / 10.0) + pTarget->m_KnockbackStrength * ((g_Config.m_SvHammerStrengthHit / 10.0));
+				float FinalHammerStrength = g_Config.m_SvHammerStrengthStart/10.f + pTarget->m_KnockbackStrength * g_Config.m_SvHammerStrengthHit/10.f;
 				if(m_SuperHammer > 0)
-					FinalHammerStrength *= (g_Config.m_SvSuperHammerStrength / 10);
+					FinalHammerStrength *= g_Config.m_SvHammerStrengthSuper/10.f;
 
 				vec2 Force = vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * FinalHammerStrength;
 				pTarget->TakeDamage(Force, 0, m_pPlayer->GetCID(), m_ActiveWeapon);
