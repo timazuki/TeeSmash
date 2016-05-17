@@ -88,6 +88,7 @@ MACRO_CONFIG_INT(SvHammerStrengthHit, sv_hammer_strength_hit, 60, 1, 100000, CFG
 MACRO_CONFIG_INT(SvHammerStrengthSuper, sv_hammer_strength_super, 1000, 1, 100000, CFGFLAG_SERVER, "By which factor the hammer strength is multiplied for super hammers")
 MACRO_CONFIG_INT(SvScoreTimeHammer, sv_score_time_hammer, 10, 1, 1000, CFGFLAG_SERVER, "For how many seconds after hammering a player you score for his death")
 MACRO_CONFIG_INT(SvScoreTimeHook, sv_score_time_hook, 10, 1, 1000, CFGFLAG_SERVER, "For how many seconds after hooking a player you score for his death")
+MACRO_CONFIG_INT(SvHammerSuperNumber, sv_hammer_super_numer, 3, 1, 1000, CFGFLAG_SERVER, "For how many hits the super hammer is enabled")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
