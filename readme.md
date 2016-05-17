@@ -1,4 +1,4 @@
-##TeeSmash [![CircleCI](https://circleci.com/gh/Ryozuki/Tee-Smash.svg?style=svg)](https://circleci.com/gh/Ryozuki/Tee-Smash)
+##TeeSmash [![CircleCI](https://circleci.com/gh/Ryozuki/TeeSmash.svg?style=svg)](https://circleci.com/gh/Ryozuki/TeeSmash)
 Created by Ryozuki with the help of timakro.
 
 ##How it Works
