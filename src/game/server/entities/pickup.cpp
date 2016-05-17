@@ -92,18 +92,18 @@ void CPickup::Tick()
 
 			case POWERUP_NINJA:
 				{
-					pChr->m_SuperHammer += 1;
+					pChr->m_SuperHammer = true;
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
 
 					// loop through all players, setting their emotes
-					CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
+					/*CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
 					for(; pC; pC = (CCharacter *)pC->TypeNext())
 					{
 						if (pC != pChr)
 							pC->SetEmote(EMOTE_SURPRISE, Server()->Tick() + Server()->TickSpeed());
 					}
 
-					pChr->SetEmote(EMOTE_ANGRY, Server()->Tick() + 1200 * Server()->TickSpeed() / 1000);
+					pChr->SetEmote(EMOTE_ANGRY, Server()->Tick() + 1200 * Server()->TickSpeed() / 1000);*/
 					break;
 				}
 
