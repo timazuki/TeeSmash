@@ -129,6 +129,12 @@ private:
 	int m_Health;
 	int m_Armor;
 
+	//spree *
+	int Spree;
+	void SpreeAdd();
+	void SpreeEnd(int Killer);
+	bool OnSpree();
+
 	// ninja
 	struct
 	{
