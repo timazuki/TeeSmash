@@ -713,6 +713,17 @@ void CCharacter::Die(int Killer, int Weapon)
 	Msg.m_ModeSpecial = ModeSpecial;
 	Server()->SendPackMsg(&Msg, MSGFLAG_VITAL, -1);
 
+	//spree *
+	if (g_Config.m_SvKillingSpree){
+		if(OnSpree())
+			GameServer()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE);
+
+		if(GameServer()->m_apPlayers[Killer]->GetCharacter())
+			GameServer()->m_apPlayers[Killer]->GetCharacter()->SpreeAdd();
+
+		SpreeEnd(Killer);
+	}
+
 	// a nice sound
 	GameServer()->CreateSound(m_Pos, SOUND_PLAYER_DIE);
 
@@ -880,6 +891,41 @@ void CCharacter::Snap(int SnappingClient)
 	}
 
 	pCharacter->m_PlayerFlags = GetPlayer()->m_PlayerFlags;
+}
+
+//spree *
+char SpreeNote[4][32] = { "is on a killing spree", "is unstoppable", "is on a rampage", "is god-like"};
+
+bool CCharacter::OnSpree()
+{
+	if(Spree >= 5)
+		return true;
+	return false;
+}
+
+void CCharacter::SpreeAdd()
+{
+	Spree++;
+	if(Spree % 5 == 0)
+	{
+		int p = (int)Spree/5-1;
+		if(p > 3)
+			p = 3;
+		char aBuf[512];
+		str_format(aBuf, sizeof(aBuf), "%s %s with %d kills!", Server()->ClientName(m_pPlayer->GetCID()), SpreeNote[p], Spree);
+		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
+	}
+}
+
+void CCharacter::SpreeEnd(int killer)
+{
+	if(Spree >= 5)
+	{
+		char aBuf[512];
+		str_format(aBuf, sizeof(aBuf), "%s %d-kills killing spree was ended by %s", Server()->ClientName(m_pPlayer->GetCID()), Spree, Server()->ClientName(killer));
+		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
+	}
+	Spree = 0;
 }
 
 CCharacter::LastTouch::LastTouch()
