@@ -65,7 +65,7 @@ bool CCharacter::Spawn(CPlayer *pPlayer, vec2 Pos)
 	m_Pos = Pos;
 
 	m_KnockbackStrength = 0;
-	m_SuperHammer = false;
+	m_SuperHammer = 0;
 
 	m_Core.Reset();
 	m_Core.Init(&GameServer()->m_World.m_Core, GameServer()->Collision());
@@ -317,10 +317,10 @@ void CCharacter::FireWeapon()
 					Dir = vec2(0.f, -1.f);
 
 				float FinalHammerStrength = g_Config.m_SvHammerStrengthStart/10.f + pTarget->m_KnockbackStrength * g_Config.m_SvHammerStrengthHit/10.f;
-				if(m_SuperHammer)
+				if(m_SuperHammer > 0)
 				{
-					FinalHammerStrength += g_Config.m_SvHammerStrengthSuper/10.f;
-					m_SuperHammer = false;
+					FinalHammerStrength += g_Config.m_SvHammerStrengthSuper/10.f * m_SuperHammer;
+					m_SuperHammer -= 1;
 				}
 				vec2 Force = vec2(0.f, -1.f) + normalize(vec2(Dir.x*2, Dir.y - 1.1f)) * FinalHammerStrength;
 				pTarget->TakeDamage(Force, 0, m_pPlayer->GetCID(), m_ActiveWeapon);
@@ -855,7 +855,11 @@ void CCharacter::Snap(int SnappingClient)
 	pCharacter->m_Health = 0;
 	pCharacter->m_Armor = 0;
 
-	pCharacter->m_Weapon = m_ActiveWeapon;
+	if(m_SuperHammer > 0)
+ 		pCharacter->m_Weapon = WEAPON_NINJA;
+	else
+ 		pCharacter->m_Weapon = m_ActiveWeapon;
+
 	pCharacter->m_AttackTick = m_AttackTick;
 
 	pCharacter->m_Direction = m_Input.m_Direction;
@@ -863,7 +867,7 @@ void CCharacter::Snap(int SnappingClient)
 	if(m_pPlayer->GetCID() == SnappingClient || SnappingClient == -1 ||
 		(!g_Config.m_SvStrictSpectateMode && m_pPlayer->GetCID() == GameServer()->m_apPlayers[SnappingClient]->m_SpectatorID))
 	{
-		pCharacter->m_Health = m_Health;
+		pCharacter->m_Health = m_SuperHammer;
 		pCharacter->m_Armor = m_Armor;
 		if(m_aWeapons[m_ActiveWeapon].m_Ammo > 0)
 			pCharacter->m_AmmoCount = m_aWeapons[m_ActiveWeapon].m_Ammo;

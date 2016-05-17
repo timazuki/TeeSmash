@@ -27,7 +27,7 @@ public:
 	CCharacter(CGameWorld *pWorld);
 
 	int m_KnockbackStrength;
-	bool m_SuperHammer;
+	int m_SuperHammer;
 
 	class LastTouch
 	{

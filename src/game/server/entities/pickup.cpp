@@ -2,6 +2,7 @@
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
 #include <game/generated/protocol.h>
 #include <game/server/gamecontext.h>
+#include <engine/shared/config.h>
 #include "pickup.h"
 
 CPickup::CPickup(CGameWorld *pGameWorld, int Type, int SubType)
@@ -92,9 +93,11 @@ void CPickup::Tick()
 
 			case POWERUP_NINJA:
 				{
-					pChr->m_SuperHammer = true;
+					if(pChr->m_SuperHammer == 0)
+					{
+					pChr->m_SuperHammer = g_Config.m_SvHammerSuperNumber;
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
-
+					}
 					// loop through all players, setting their emotes
 					/*CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
 					for(; pC; pC = (CCharacter *)pC->TypeNext())
