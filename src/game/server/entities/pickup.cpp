@@ -19,10 +19,8 @@ CPickup::CPickup(CGameWorld *pGameWorld, int Type, int SubType)
 
 void CPickup::Reset()
 {
-	if (g_pData->m_aPickups[m_Type].m_Spawndelay > 0)
-		m_SpawnTick = Server()->Tick() + Server()->TickSpeed() * g_pData->m_aPickups[m_Type].m_Spawndelay;
-	else
-		m_SpawnTick = -1;
+	if(m_Type == POWERUP_NINJA)
+		m_SpawnTick = Server()->Tick() + Server()->TickSpeed() * g_Config.m_SvHammerSuperSpawnTime;
 }
 
 void CPickup::Tick()
@@ -95,8 +93,8 @@ void CPickup::Tick()
 				{
 					if(pChr->m_SuperHammer == 0)
 					{
-					pChr->m_SuperHammer = g_Config.m_SvHammerSuperNumber;
-					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
+						pChr->m_SuperHammer = g_Config.m_SvHammerSuperNumber;
+						RespawnTime = g_Config.m_SvHammerSuperSpawnTime;
 					}
 					// loop through all players, setting their emotes
 					/*CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
