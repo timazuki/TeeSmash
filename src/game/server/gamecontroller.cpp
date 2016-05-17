@@ -156,7 +156,7 @@ bool IGameController::OnEntity(int Index, vec2 Pos)
 		Type = POWERUP_WEAPON;
 		SubType = WEAPON_RIFLE;
 	}*/
-	else if(Index == ENTITY_POWERUP_NINJA && g_Config.m_SvPowerups)
+	else if(Index == ENTITY_POWERUP_NINJA && g_Config.m_SvHammerSuper)
 	{
 		Type = POWERUP_NINJA;
 		SubType = WEAPON_NINJA;
