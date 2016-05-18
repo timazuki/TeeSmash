@@ -130,10 +130,11 @@ private:
 	int m_Armor;
 
 	//spree *
-	int Spree;
+	int m_Spree;
 	void SpreeAdd();
 	void SpreeEnd(int Killer);
 	bool OnSpree();
+	const char *SpreeMessage();
 
 	// ninja
 	struct
