@@ -26,21 +26,6 @@ public:
 
 	CCharacter(CGameWorld *pWorld);
 
-	int m_KnockbackStrength;
-	int m_SuperHammer;
-
-	class LastTouch
-	{
-		int m_TouchedBy;
-		int64 m_TouchedUntil;
-	public:
-		LastTouch();
-		void By(int ClientID, int Duration);
-		int Who();
-	};
-	LastTouch m_LastHammer;
-	LastTouch m_LastHook;
-
 	virtual void Reset();
 	virtual void Destroy();
 	virtual void Tick();
@@ -78,6 +63,9 @@ public:
 
 	bool IsAlive() const { return m_Alive; }
 	class CPlayer *GetPlayer() { return m_pPlayer; }
+
+	int m_KnockbackStrength;
+	int m_SuperHammer;
 
 private:
 	// player controlling this character
@@ -129,13 +117,6 @@ private:
 	int m_Health;
 	int m_Armor;
 
-	//spree *
-	int m_Spree;
-	void SpreeAdd();
-	void SpreeEnd(int Killer);
-	bool OnSpree();
-	const char *SpreeMessage();
-
 	// ninja
 	struct
 	{
@@ -153,6 +134,25 @@ private:
 	CCharacterCore m_SendCore; // core that we should send
 	CCharacterCore m_ReckoningCore; // the dead reckoning core
 
+	// record who hammered or hooked us last
+	class LastTouch
+	{
+		int m_TouchedBy;
+		int64 m_TouchedUntil;
+	public:
+		LastTouch();
+		void By(int ClientID, int Duration);
+		int Who();
+	};
+	LastTouch m_LastHammer;
+	LastTouch m_LastHook;
+
+	// spree messages
+	int m_Spree;
+	void SpreeAdd();
+	void SpreeEnd(int Killer);
+	bool OnSpree();
+	const char *SpreeMessage();
 };
 
 #endif
