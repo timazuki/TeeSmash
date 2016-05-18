@@ -89,12 +89,12 @@ MACRO_CONFIG_INT(SvScoreTimeHammer, sv_score_time_hammer, 10, 0, 1000, CFGFLAG_S
 MACRO_CONFIG_INT(SvScoreTimeHook, sv_score_time_hook, 10, 0, 1000, CFGFLAG_SERVER, "For how many seconds after hooking a player you score for his death")
 
 MACRO_CONFIG_INT(SvHammerSuper, sv_hammer_super, 1, 0, 1, CFGFLAG_SERVER, "Wether the super hammer powerup (ninja) spawns")
-MACRO_CONFIG_INT(SvHammerSuperSpawnTime, sv_hammer_super_spawn_time, 40, 0, 1000, CFGFLAG_SERVER, "How many seconds it takes for the super hammer powerup (ninja) to spawn")
-MACRO_CONFIG_INT(SvHammerSuperStrength, sv_hammer_super_strength, 800, 0, 100000, CFGFLAG_SERVER, "By how much having super hammer increases the hammer strength")
+MACRO_CONFIG_INT(SvHammerSuperSpawnTime, sv_hammer_super_spawn_time, 90, 0, 1000, CFGFLAG_SERVER, "How many seconds it takes for the super hammer powerup (ninja) to spawn")
+MACRO_CONFIG_INT(SvHammerSuperStrength, sv_hammer_super_strength, 500, 0, 100000, CFGFLAG_SERVER, "By how much having super hammer increases the hammer strength")
 MACRO_CONFIG_INT(SvHammerSuperNumber, sv_hammer_super_number, 5, 0, 1000, CFGFLAG_SERVER, "How many hits the super hammer lasts (displayed as health ingame)")
 
-MACRO_CONFIG_INT(SvKillingSpree, sv_killing_spree, 1, 0, 1, CFGFLAG_SERVER, "Enable Killing spree messages")
-MACRO_CONFIG_INT(SvKillingSpreeMsgInterval, sv_killing_spree_msg_interval, 3, 1, 1000, CFGFLAG_SERVER, "How many kills between killspree messages")
+MACRO_CONFIG_INT(SvKillingSpree, sv_killing_spree, 1, 0, 1, CFGFLAG_SERVER, "Enable killing spree messages")
+MACRO_CONFIG_INT(SvKillingSpreeMsgKills, sv_killing_spree_msg_kills, 3, 1, 1000, CFGFLAG_SERVER, "How many kills to do between killing spree messages")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly

@@ -895,23 +895,25 @@ void CCharacter::Snap(int SnappingClient)
 
 bool CCharacter::OnSpree()
 {
-	if(m_Spree >= g_Config.m_SvKillingSpreeMsgInterval)
+	if(m_Spree >= g_Config.m_SvKillingSpreeMsgKills)
 		return true;
 	return false;
 }
+
 const char *CCharacter::SpreeMessage()
 {
-	static char SpreeNote[][32] = {"on a killing spree", "unstoppable", "on a rampage", "god-like", "beyond GODLIKE"};
-	int SpreeNoteNum = sizeof(SpreeNote) / sizeof(SpreeNote[0]);
-	int p = m_Spree/g_Config.m_SvKillingSpreeMsgInterval-1;
-	if(p >= SpreeNoteNum)
-		p = SpreeNoteNum-1;
-	return SpreeNote[p];
+	static char SpreeMsg[][32] = {"on a smashing spree", "unsmashable", "a born smasher", "smashing like a boss", "a god-like smasher"};
+	static int SpreeMsgNum = sizeof(SpreeMsg) / sizeof(SpreeMsg[0]);
+	int i = m_Spree / g_Config.m_SvKillingSpreeMsgKills - 1;
+	if(i >= SpreeMsgNum)
+		i = SpreeMsgNum - 1;
+	return SpreeMsg[i];
 }
+
 void CCharacter::SpreeAdd()
 {
 	m_Spree++;
-	if(m_Spree % g_Config.m_SvKillingSpreeMsgInterval == 0)
+	if(m_Spree % g_Config.m_SvKillingSpreeMsgKills == 0)
 	{
 		char aBuf[512];
 		str_format(aBuf, sizeof(aBuf), "'%s' is %s with %d kills!", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree);
@@ -921,21 +923,14 @@ void CCharacter::SpreeAdd()
 
 void CCharacter::SpreeEnd(int killer)
 {
-	if(m_Spree >= g_Config.m_SvKillingSpreeMsgInterval)
+	if(m_Spree >= g_Config.m_SvKillingSpreeMsgKills)
 	{
+		char aBuf[512];
 		if(killer == m_pPlayer->GetCID())
-		{
-			char aBuf[512];
 			str_format(aBuf, sizeof(aBuf), "'%s' was %s with %d kills but died", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree);
-			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
-		}
 		else
-		{
-			char aBuf[512];
 			str_format(aBuf, sizeof(aBuf), "'%s' was %s with %d kills but was stopped by '%s'", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree, Server()->ClientName(killer));
-			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
-		}
-
+		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 	}
 	m_Spree = 0;
 }
