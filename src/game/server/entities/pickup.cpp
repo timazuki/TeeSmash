@@ -21,6 +21,8 @@ void CPickup::Reset()
 {
 	if(m_Type == POWERUP_NINJA)
 		m_SpawnTick = Server()->Tick() + Server()->TickSpeed() * g_Config.m_SvHammerSuperSpawnTime;
+	else
+		m_SpawnTick = -1;
 }
 
 void CPickup::Tick()
