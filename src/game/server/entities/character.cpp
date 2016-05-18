@@ -895,7 +895,7 @@ void CCharacter::Snap(int SnappingClient)
 
 bool CCharacter::OnSpree()
 {
-	if(m_Spree >= g_Config.m_SvKillsPerSpreeMsg)
+	if(m_Spree >= g_Config.m_SvKillingSpreeMsgInterval)
 		return true;
 	return false;
 }
@@ -903,7 +903,7 @@ const char *CCharacter::SpreeMessage()
 {
 	static char SpreeNote[][32] = {"is on a killing spree", "is unstoppable", "is on a rampage", "is god-like", "is beyond GODLIKE"};
 	int SpreeNoteNum = sizeof(SpreeNote) / sizeof(SpreeNote[0]);
-	int p = m_Spree/g_Config.m_SvKillsPerSpreeMsg-1;
+	int p = m_Spree/g_Config.m_SvKillingSpreeMsgInterval-1;
 	if(p >= SpreeNoteNum)
 		p = SpreeNoteNum-1;
 	return SpreeNote[p];
@@ -911,7 +911,7 @@ const char *CCharacter::SpreeMessage()
 void CCharacter::SpreeAdd()
 {
 	m_Spree++;
-	if(m_Spree % g_Config.m_SvKillsPerSpreeMsg == 0)
+	if(m_Spree % g_Config.m_SvKillingSpreeMsgInterval == 0)
 	{
 		char aBuf[512];
 		str_format(aBuf, sizeof(aBuf), "'%s' %s with %d kills!", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree);
@@ -921,7 +921,7 @@ void CCharacter::SpreeAdd()
 
 void CCharacter::SpreeEnd(int killer)
 {
-	if(m_Spree >= g_Config.m_SvKillsPerSpreeMsg)
+	if(m_Spree >= g_Config.m_SvKillingSpreeMsgInterval)
 	{
 		if(killer == m_pPlayer->GetCID())
 		{

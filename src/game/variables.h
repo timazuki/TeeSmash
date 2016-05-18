@@ -94,7 +94,7 @@ MACRO_CONFIG_INT(SvHammerSuperStrength, sv_hammer_super_strength, 800, 0, 100000
 MACRO_CONFIG_INT(SvHammerSuperNumber, sv_hammer_super_number, 5, 0, 1000, CFGFLAG_SERVER, "How many hits the super hammer lasts (displayed as health ingame)")
 
 MACRO_CONFIG_INT(SvKillingSpree, sv_killing_spree, 1, 0, 1, CFGFLAG_SERVER, "Enable Killing spree messages")
-MACRO_CONFIG_INT(SvKillsPerSpreeMsg, sv_kills_per_spree_msg, 3, 1, 1000, CFGFLAG_SERVER, "For how many kills to show next kill spree message")
+MACRO_CONFIG_INT(SvKillingSpreeMsgInterval, sv_killing_spree_msg_interval, 3, 1, 1000, CFGFLAG_SERVER, "How many kills between killspree messages")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
