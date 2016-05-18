@@ -901,7 +901,7 @@ bool CCharacter::OnSpree()
 }
 const char *CCharacter::SpreeMessage()
 {
-	static char SpreeNote[][32] = {"is on a killing spree", "is unstoppable", "is on a rampage", "is god-like", "is beyond GODLIKE"};
+	static char SpreeNote[][32] = {"on a killing spree", "unstoppable", "on a rampage", "god-like", "beyond GODLIKE"};
 	int SpreeNoteNum = sizeof(SpreeNote) / sizeof(SpreeNote[0]);
 	int p = m_Spree/g_Config.m_SvKillingSpreeMsgInterval-1;
 	if(p >= SpreeNoteNum)
@@ -914,7 +914,7 @@ void CCharacter::SpreeAdd()
 	if(m_Spree % g_Config.m_SvKillingSpreeMsgInterval == 0)
 	{
 		char aBuf[512];
-		str_format(aBuf, sizeof(aBuf), "'%s' %s with %d kills!", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree);
+		str_format(aBuf, sizeof(aBuf), "'%s' is %s with %d kills!", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree);
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 	}
 }
@@ -926,13 +926,13 @@ void CCharacter::SpreeEnd(int killer)
 		if(killer == m_pPlayer->GetCID())
 		{
 			char aBuf[512];
-			str_format(aBuf, sizeof(aBuf), "'%s' was on a killing spree with %d kills but died", Server()->ClientName(m_pPlayer->GetCID()), m_Spree);
+			str_format(aBuf, sizeof(aBuf), "'%s' was %s with %d kills but died", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree);
 			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 		}
 		else
 		{
 			char aBuf[512];
-			str_format(aBuf, sizeof(aBuf), "'%s' %s with %d kills but was stopped by '%s'", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree, Server()->ClientName(killer));
+			str_format(aBuf, sizeof(aBuf), "'%s' was %s with %d kills but was stopped by '%s'", Server()->ClientName(m_pPlayer->GetCID()), SpreeMessage(), m_Spree, Server()->ClientName(killer));
 			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 		}
 
