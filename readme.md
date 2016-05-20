@@ -22,5 +22,4 @@ the game, including new versions, custom maps and much more.
 
 Copyright (c) 2016 Ryozuki & timakro
 
-
 Whoever modifies the TeeSmash code, is required to make his changes to the source code available to others, when distributing modified versions of TeeSmash. Also "Ryozuki" and "timakro" both need to be mentioned in the credits if you use any code of the modification.
