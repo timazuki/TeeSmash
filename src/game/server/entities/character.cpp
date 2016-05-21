@@ -713,12 +713,12 @@ void CCharacter::Die(int Killer, int Weapon)
 	Msg.m_ModeSpecial = ModeSpecial;
 	Server()->SendPackMsg(&Msg, MSGFLAG_VITAL, -1);
 
-	//spree *
-	if (g_Config.m_SvKillingSpree){
+	if (g_Config.m_SvKillingSpree)
+	{
 		if(OnSpree())
 			GameServer()->CreateSound(m_Pos, SOUND_GRENADE_EXPLODE);
 
-		if(GameServer()->m_apPlayers[Killer]->GetCharacter())
+		if(m_pPlayer->GetCID() != Killer && GameServer()->m_apPlayers[Killer] && GameServer()->m_apPlayers[Killer]->GetCharacter())
 			GameServer()->m_apPlayers[Killer]->GetCharacter()->SpreeAdd();
 
 		SpreeEnd(Killer);
