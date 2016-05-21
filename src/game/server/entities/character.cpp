@@ -724,6 +724,17 @@ void CCharacter::Die(int Killer, int Weapon)
 		SpreeEnd(Killer);
 	}
 
+	// set killers emote to happy
+	if (Killer != m_pPlayer->GetCID() && GameServer()->m_apPlayers[Killer])
+	{
+		CCharacter *pChr = GameServer()->m_apPlayers[Killer]->GetCharacter();
+		if (pChr)
+		{
+			pChr->m_EmoteType = EMOTE_HAPPY;
+			pChr->m_EmoteStop = Server()->Tick() + Server()->TickSpeed();
+		}
+	}
+
 	// a nice sound
 	GameServer()->CreateSound(m_Pos, SOUND_PLAYER_DIE);
 
