@@ -913,7 +913,22 @@ bool CCharacter::OnSpree()
 
 const char *CCharacter::SpreeMessage()
 {
-	static char SpreeMsg[][32] = {"on a smashing spree", "unsmashable", "a born smasher", "smashing like a boss", "a god-like smasher"};
+	static char SpreeMsg[][32] = {
+		"a SMASHed SMASHer",
+		"on a SMASHing spree",
+		"unSMASHable",
+		"SMASHing here",
+		"in a SMASHed mood",
+		"SMASHmazing",
+		"a supercute SMASHer",
+		"born to be a SMASHer",
+		"SMASHing it like a boss",
+		"addicted to SMASH",
+		"like a SMASH god",
+		"a SMASHing legend",
+		"using a SMASH-bot",
+		"should be SMASH developer"
+	};
 	static int SpreeMsgNum = sizeof(SpreeMsg) / sizeof(SpreeMsg[0]);
 	int i = m_Spree / g_Config.m_SvKillingSpreeMsgKills - 1;
 	if(i >= SpreeMsgNum)
