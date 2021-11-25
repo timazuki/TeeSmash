@@ -2,10 +2,10 @@
 Created by Ryozuki with the help of timakro.
 
 ## How it Works
-The goal of this gamemode is to hammer others on the spikes or out of the map.
-When you hammer a tee, the knockback strength against that tee increases (the strength is indicated with the skin color).
+The goal of this game mode is to hammer others on the spikes or out of the map. When you hammer a tee, the knockback strength against that tee increases (the strength is indicated with the skin color).
 
-The hearts decrease your knockback and the shields protect you against adding knockback from 1 hit.
+The hearts decrease your knockback and the shields protect you against adding knock back from 1 hit.
+The ninja gives you a super hammer for 5 hits (see your hearts bar), hits can be configured through autoexec.cfg
 
 ## Teeworlds
 Copyright (c) 2015 Magnus Auvinen
